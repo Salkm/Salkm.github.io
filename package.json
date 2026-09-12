@@ -2,13 +2,24 @@
   "name": "saleem-km-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Static portfolio site exported from Lovable.",
+  "type": "module",
+  "description": "Saleem KM's interactive 3D cybersecurity and AI automation portfolio.",
   "scripts": {
-    "dev": "http-server . -p 4173 -c-1",
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
     "start": "npm run dev"
   },
+  "dependencies": {
+    "@fontsource-variable/gabarito": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/uncut-sans": "^5.3.0",
+    "lucide": "^0.577.0",
+    "three": "0.186.0"
+  },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "vite": "8.3.0"
   }
 }
-

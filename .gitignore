@@ -3,4 +3,11 @@ node_modules/
 .netlify/
 .DS_Store
 Thumbs.db
-
+dist/
+artifacts/
+*.log
+# Local generation history and reference-study notes are not public documentation.
+docs/REFERENCE-MATCH.md
+docs/PORTRAIT-MOTION.md
+docs/TRAVEL-PORTRAIT.md
+docs/HOVER-EXPERIENCE.md

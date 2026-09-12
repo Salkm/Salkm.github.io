@@ -1,0 +1,435 @@
+@media (max-width: 1150px) {
+  .wrap {
+    width: calc(100% - 80px);
+  }
+  .about-grid {
+    gap: 60px;
+  }
+  .about-copy h2 {
+    font-size: 40px;
+  }
+  .experience-layout {
+    gap: 45px;
+  }
+  .experience-intro h2 {
+    font-size: 42px;
+  }
+  .experience-item summary {
+    grid-template-columns: 94px 1fr 16px;
+    gap: 14px;
+  }
+  .experience-detail {
+    padding-left: 108px;
+  }
+}
+@media (max-width: 900px) {
+  .wrap {
+    width: calc(100% - 48px);
+  }
+  .section-space {
+    padding: 85px 0;
+  }
+  h2 {
+    font-size: 47px;
+  }
+  .impact-grid > div:not(:first-child) {
+    padding-left: 22px;
+  }
+  .impact-grid strong {
+    font-size: 31px;
+  }
+  .impact-grid p {
+    font-size: 9px;
+  }
+  .project-list {
+    gap: 38px 24px;
+  }
+  .project h3 {
+    font-size: 24px;
+  }
+  .project-visual {
+    padding: 16px;
+  }
+  .visual-header {
+    font-size: 7px;
+  }
+  .workflow-node {
+    font-size: 8px;
+  }
+  .node-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .about-grid {
+    gap: 35px;
+  }
+  .about-copy h2 {
+    font-size: 35px;
+  }
+  .about-copy > p:not(.eyebrow) {
+    font-size: 12px;
+  }
+  .expertise-grid {
+    gap: 24px;
+  }
+  .expertise-group h3 {
+    font-size: 14px;
+  }
+  .expertise-group ul {
+    font-size: 10px;
+  }
+  .experience-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .experience-intro > p:last-child {
+    max-width: 470px;
+  }
+  .experience-item summary {
+    grid-template-columns: 140px 1fr 20px;
+  }
+  .experience-detail {
+    padding-left: 154px;
+  }
+  .credentials {
+    grid-template-columns: 135px 1fr;
+  }
+  .contact-section {
+    padding-bottom: 0;
+  }
+  .contact-section h2 {
+    font-size: 82px;
+  }
+}
+@media (max-width: 760px) {
+  .wrap {
+    width: calc(100% - 40px);
+  }
+  .impact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 25px;
+    padding: 28px 0;
+  }
+  .impact-grid > div:not(:first-child) {
+    border: 0;
+    padding: 0;
+  }
+  .impact-grid > div:nth-child(even) {
+    border-left: 1px solid #b3d2bd26;
+    padding-left: 25px;
+  }
+  .impact-grid strong {
+    font-size: 34px;
+  }
+  .impact-grid p {
+    font-size: 9px;
+  }
+  .section-space {
+    padding: 70px 0;
+  }
+  .section-top {
+    margin-bottom: 24px;
+  }
+  .section-top .small-note {
+    display: none;
+  }
+  .eyebrow {
+    font-size: 9px;
+  }
+  .section-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  h2 {
+    font-size: 42px;
+  }
+  .section-heading-row > p {
+    font-size: 12px;
+  }
+  .project-filters {
+    gap: 2px;
+    justify-content: space-between;
+    margin-top: 28px;
+    margin-bottom: 28px;
+    padding-bottom: 17px;
+  }
+  .project-filters button {
+    font-size: 10px;
+    padding: 9px 10px;
+  }
+  .project-filters button span {
+    margin-left: 5px;
+    font-size: 8px;
+  }
+  .project-list {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .project-visual {
+    aspect-ratio: 1.85;
+    padding: 16px 18px;
+  }
+  .visual-header {
+    font-size: 7px;
+  }
+  .visual-footer {
+    font-size: 8px;
+  }
+  .node-icon {
+    width: 42px;
+    height: 42px;
+  }
+  .node-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .workflow-node {
+    font-size: 10px;
+    gap: 10px;
+  }
+  .workflow-connector {
+    max-width: 40px;
+    margin-bottom: 24px;
+  }
+  .project-body {
+    padding-top: 19px;
+  }
+  .project h3 {
+    font-size: 27px;
+  }
+  .project-summary {
+    font-size: 12px;
+  }
+  .project-outcome {
+    font-size: 10px;
+    margin-bottom: 11px;
+  }
+  .project-bottom {
+    margin-top: 16px;
+    padding-top: 10px;
+  }
+  .project-bottom p {
+    font-size: 8px;
+  }
+  .project-open {
+    width: 38px;
+    height: 38px;
+  }
+  .github-link {
+    font-size: 10px;
+    gap: 8px;
+    margin-top: 30px;
+  }
+  .github-link svg {
+    width: 15px;
+    height: 15px;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .portrait {
+    max-height: 530px;
+  }
+  .portrait-caption {
+    font-size: 8px;
+  }
+  .about-copy .eyebrow {
+    font-size: 8px;
+    margin-bottom: 22px;
+  }
+  .about-copy h2 {
+    font-size: 39px;
+    margin-bottom: 25px;
+  }
+  .about-copy > p:not(.eyebrow) {
+    font-size: 13px;
+  }
+  .about-copy .text-link {
+    font-size: 10px;
+  }
+  .expertise-block {
+    padding-top: 60px;
+  }
+  .expertise-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 20px;
+  }
+  .expertise-group h3 {
+    font-size: 15px;
+  }
+  .expertise-group ul {
+    font-size: 11px;
+  }
+  .experience-intro h2 {
+    font-size: 42px;
+  }
+  .experience-intro > p:last-child {
+    font-size: 12px;
+  }
+  .experience-item summary {
+    grid-template-columns: 1fr 18px;
+    gap: 9px;
+    padding: 23px 0;
+  }
+  .experience-date {
+    grid-column: 1;
+    font-size: 9px;
+  }
+  .experience-main {
+    grid-column: 1;
+    gap: 8px;
+  }
+  .experience-main strong {
+    font-size: 17px;
+  }
+  .experience-main > span {
+    font-size: 11px;
+  }
+  .experience-item summary > svg {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+  }
+  .experience-detail {
+    padding: 0 0 25px;
+  }
+  .experience-detail p {
+    font-size: 12px;
+  }
+  .credentials {
+    grid-template-columns: 1fr;
+    margin-top: 35px;
+    padding-top: 30px;
+    gap: 20px;
+  }
+  .credentials ul {
+    gap: 15px 22px;
+  }
+  .credentials li {
+    font-size: 10px;
+  }
+  .contact-section {
+    padding-bottom: 0;
+  }
+  .contact-section h2 {
+    font-size: 62px;
+  }
+  .contact-section .eyebrow {
+    font-size: 8px;
+    max-width: 270px;
+  }
+  .contact-arrow {
+    width: 30px;
+    height: 30px;
+  }
+  .contact-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    margin-top: 25px;
+  }
+  .contact-bottom p {
+    font-size: 12px;
+  }
+  .contact-bottom .button {
+    min-height: 47px;
+    font-size: 11px;
+  }
+  .contact-links {
+    margin-top: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 11px;
+    padding: 25px 0;
+  }
+  .contact-spacer {
+    flex-basis: 100%;
+    height: 5px;
+  }
+  .contact-links > a {
+    min-height: 28px;
+  }
+  .contact-links > a:last-child {
+    margin-left: 15px;
+  }
+  .contact-links .copy-email {
+    margin-left: 0;
+  }
+  footer {
+    flex-wrap: wrap;
+    gap: 13px;
+    font-size: 8px;
+    padding: 23px 0;
+  }
+  footer > p:nth-child(2) {
+    margin: 0;
+    font-size: 7px;
+  }
+  footer > a {
+    margin-left: auto;
+  }
+  .project-dialog {
+    padding: 42px 24px 28px;
+    max-height: calc(100svh - 24px);
+  }
+  .project-dialog h2 {
+    font-size: 28px;
+  }
+  .dialog-outcome {
+    font-size: 12px;
+  }
+  .dialog-story p {
+    font-size: 12px;
+  }
+  .project-dialog .button {
+    width: 100%;
+    font-size: 10px;
+    gap: 14px;
+  }
+}
+@media (max-width: 400px) {
+  .project-filters button {
+    font-size: 9px;
+    padding: 9px;
+  }
+  .contact-section h2 {
+    font-size: 53px;
+  }
+}
+@media (max-width: 350px) {
+  .project-filters button {
+    padding: 9px 6px;
+    font-size: 8px;
+  }
+  .project-visual {
+    padding: 13px;
+  }
+  .visual-header {
+    font-size: 6px;
+  }
+  .project h3 {
+    font-size: 24px;
+  }
+  .about-copy h2 {
+    font-size: 34px;
+  }
+  .contact-section h2 {
+    font-size: 47px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+  *,
+  *:before,
+  *:after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .button:hover {
+    transform: none;
+  }
+}
