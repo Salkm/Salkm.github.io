@@ -5,13 +5,22 @@ import { fileURLToPath } from "node:url";
 
 export default defineConfig({
   base: "./",
+  server: { watch: { ignored: ['**/artifacts/**'] } },
   define: {
     __REFERENCE_STUDY_AVAILABLE__: JSON.stringify([
       './artifacts/reference/portrait-study.png',
       './artifacts/reference/motion-study.mp4',
     ].every(path => existsSync(fileURLToPath(new URL(path, import.meta.url))))),
   },
-  build: { target: "es2022" },
+  build: {
+    target: "es2022",
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        lab: fileURLToPath(new URL('./containment-lab.html', import.meta.url)),
+      },
+    },
+  },
   plugins: [
     {
       name: "local-reference-study",

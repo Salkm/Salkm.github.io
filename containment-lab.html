@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080b0a" />
+    <meta
+      name="description"
+      content="An AI automation workflow for antivirus and SIEM alerts: evidence enrichment, risk assessment, authorized containment and verified response."
+    />
+    <title>AI Malware Containment | Saleem KM</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#incident">Skip to incident evidence</a>
+    <header class="lab-header">
+      <a class="lab-brand" href="./index.html" aria-label="Saleem KM portfolio"
+        >saleem<span>km.</span></a
+      >
+      <a class="back-link" href="./index.html#work"
+        ><i data-lucide="arrow-up-left"></i>Portfolio</a
+      >
+      <span class="header-divider"></span>
+      <span class="header-context">AI SECURITY / ENDPOINT RESPONSE</span>
+      <a
+        class="contact-link"
+        href="mailto:mail2skm@icloud.com?subject=Endpoint%20response%20automation"
+        >Discuss a workflow<i data-lucide="arrow-up-right"></i
+      ></a>
+    </header>
+    <main>
+      <section class="lab-heading" aria-labelledby="lab-title">
+        <div>
+          <p class="eyebrow">THE CONTAINMENT LAB / AI-ASSISTED RESPONSE</p>
+          <h1 id="lab-title">
+            Malware &amp; Ransomware Containment<span class="title-dot">.</span>
+          </h1>
+          <p class="lab-subtitle">
+            From security alert to verified response, through an AI automation workflow.
+          </p>
+        </div>
+        <div class="lab-context">
+          <span class="simulation-badge"><span></span>SIMULATED INCIDENT</span>
+          <p>
+            Antivirus / SIEM <span>/</span> AI automation
+          </p>
+        </div>
+      </section>
+      <section class="workflow-intro" aria-label="AI automation use case">
+        <p>An alert from an antivirus solution or SIEM starts the AI automation workflow.
+          It gathers file, process and device evidence, uses AI to summarize the risk,
+          then routes the case to a policy-authorized response or analyst review.
+          Confirmed malware is quarantined; active ransomware takes an emergency isolation
+          path when pre-authorized. Benign alerts are closed after review, while uncertain
+          cases remain under investigation. Response results are verified and recorded.</p>
+      </section>
+      <section class="scenario-bar" aria-label="Incident settings">
+        <div class="scenario-tabs" role="group" aria-label="Incident scenario">
+          <button data-scenario="malware" aria-pressed="true">
+            <i data-lucide="file-warning"></i>Malware
+          </button>
+          <button data-scenario="ransomware" aria-pressed="false">
+            <i data-lucide="shield-alert"></i>Ransomware
+          </button>
+          <button data-scenario="benign" aria-pressed="false">
+            <i data-lucide="badge-check"></i>Benign alert
+          </button>
+          <button data-scenario="uncertain" aria-pressed="false">
+            <i data-lucide="user-round-search"></i>Needs review
+          </button>
+        </div>
+        <div class="source-controls">
+          <label for="source">Source</label
+          ><select id="source">
+            <option value="antivirus">Antivirus solution</option>
+            <option value="siem">SIEM</option>
+            <option value="endpoint">Endpoint detection</option></select
+          ><label class="online-control"
+            ><input type="checkbox" id="endpoint-online" checked /><span
+              >Endpoint online</span
+            ></label
+          >
+        </div>
+      </section>
+      <div class="lab-workspace" id="lab-workspace">
+        <section class="scene-surface" data-view="interactive" aria-label="Holographic containment laboratory">
+          <canvas
+            id="lab-canvas"
+            aria-label="Floating 3D hologram with selectable endpoint, orchestration, investigation and response stations"
+          ></canvas>
+          <div id="station-labels" class="station-labels"></div>
+          <div class="scene-fallback" id="scene-fallback" hidden>
+            <img
+              src="./containment-hologram.png"
+              alt="Holographic containment lab floating above a light projector with linked security stations"
+            />
+            <p>
+              3D rendering unavailable. Incident playback and evidence remain
+              available.
+            </p>
+            <button id="retry-renderer">
+              Retry 3D <i data-lucide="refresh-cw"></i>
+            </button>
+          </div>
+          <div class="scene-topline">
+            <span class="scene-coordinate">LAB / 01</span>
+            <span id="scene-state">INITIALIZING SCENE</span>
+          </div>
+          <div class="scene-tools" role="group" aria-label="3D view controls">
+            <button
+              id="zoom-in"
+              class="icon-button"
+              aria-label="Zoom in"
+              data-tooltip="Zoom in"
+            >
+              <i data-lucide="plus"></i>
+            </button>
+            <button
+              id="zoom-out"
+              class="icon-button"
+              aria-label="Zoom out"
+              data-tooltip="Zoom out"
+            >
+              <i data-lucide="minus"></i>
+            </button>
+            <button
+              id="reset-view"
+              class="icon-button"
+              aria-label="Reset view"
+              data-tooltip="Reset view"
+            >
+              <i data-lucide="scan"></i>
+            </button>
+            <button
+              id="fullscreen"
+              class="icon-button"
+              aria-label="Enter fullscreen"
+              data-tooltip="Fullscreen"
+            >
+              <i data-lucide="maximize"></i>
+            </button>
+          </div>
+          <div class="scene-legend" aria-label="Workflow states">
+            <span><b class="legend-green"></b>Processing</span
+            ><span><b class="legend-amber"></b>Review</span
+            ><span><b class="legend-red"></b>Containment</span>
+          </div>
+          <div class="scene-caption">
+            <span id="active-stage-number">01</span>
+            <p id="active-stage-caption">Endpoint alert received</p>
+          </div>
+        </section>
+        <aside
+          class="incident-panel"
+          id="incident"
+          aria-labelledby="incident-title"
+        >
+          <div class="panel-kicker">
+            <span>INCIDENT RECORD</span><span id="incident-id">SIM-2401</span>
+          </div>
+          <h2 id="incident-title">Malware detected</h2>
+          <div class="incident-meta">
+            <span id="severity" class="severity">HIGH</span
+            ><span id="endpoint-name">LAB-WKS-042</span>
+          </div>
+          <div class="stage-inspector">
+            <div class="inspector-heading">
+              <span id="inspector-kicker">CURRENT STAGE</span
+              ><button
+                id="follow-stage"
+                class="icon-button"
+                aria-label="Follow current stage"
+                data-tooltip="Follow current stage"
+                hidden
+              >
+                <i data-lucide="locate-fixed"></i>
+              </button>
+            </div>
+            <h3 id="stage-title"></h3>
+            <p id="stage-description"></p>
+          </div>
+          <dl class="evidence-list" id="evidence-list"></dl>
+          <div id="approval-gate" class="approval-gate" hidden>
+            <p>
+              <i data-lucide="user-round-check"></i>Analyst decision required
+            </p>
+            <div>
+              <button id="approve-action">Approve quarantine</button
+              ><button id="escalate-action">Escalate</button>
+            </div>
+          </div>
+          <div class="policy-note">
+            <i data-lucide="shield-check"></i>
+            <p id="policy-note"></p>
+          </div>
+          <div class="incident-log">
+            <div class="log-title">
+              <h3>Action trail</h3>
+              <button
+                id="download-audit"
+                class="icon-button"
+                aria-label="Download simulated audit record"
+                data-tooltip="Download audit record"
+              >
+                <i data-lucide="download"></i>
+              </button>
+            </div>
+            <ol id="action-log"></ol>
+          </div>
+        </aside>
+      </div>
+      <section class="playback-bar" aria-label="Incident playback">
+        <div class="playback-controls">
+          <button
+            id="play-pause"
+            class="play-button"
+            aria-label="Pause incident"
+          >
+            <i data-lucide="pause"></i><span>Pause</span></button
+          ><button
+            id="restart"
+            class="icon-button"
+            aria-label="Replay incident"
+            data-tooltip="Replay incident"
+          >
+            <i data-lucide="rotate-ccw"></i></button
+          ><button
+            id="next-step"
+            class="icon-button"
+            aria-label="Next stage"
+            data-tooltip="Next stage"
+          >
+            <i data-lucide="step-forward"></i></button
+          ><label class="speed-control" for="playback-speed"
+            >Speed<select id="playback-speed">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected>1x</option>
+              <option value="2">2x</option>
+            </select></label
+          >
+        </div>
+        <div class="playback-progress">
+          <div>
+            <span id="playback-status">Incident in progress</span
+            ><span id="step-counter">1 / 8</span>
+          </div>
+          <progress
+            id="incident-progress"
+            max="1"
+            value="0"
+            aria-label="Incident progress"
+          ></progress>
+        </div>
+        <label class="motion-control"
+          ><input type="checkbox" id="motion-enabled" checked />Scene
+          motion</label
+        >
+      </section>
+      <nav
+        class="station-directory"
+        aria-label="Workflow stations"
+        id="station-directory"
+      ></nav>
+      <section class="workflow-note" aria-label="Simulation scope">
+        <p>Illustrative incidents and response results. No live security actions or AI requests
+          are performed. Response capabilities depend on the connected security solution and approved policy.</p>
+        <a href="mailto:mail2skm@icloud.com?subject=AI%20containment%20workflow">Discuss a similar workflow<i data-lucide="arrow-up-right"></i></a>
+      </section>
+    </main>
+    <footer class="lab-footer">
+      <a href="./index.html#work">SALEEM KM / SELECTED WORK</a
+      ><span>CYBERSECURITY + AI AUTOMATION</span>
+    </footer>
+    <div
+      id="lab-announcement"
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+    ></div>
+    <script type="module" src="/src/lab/main.js"></script>
+  </body>
+</html>

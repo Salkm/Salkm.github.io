@@ -43,6 +43,7 @@ import { createPageMotion } from "./page-motion.js";
 import { createPageField } from "./page-field.js";
 import { createHeroTerminal } from "./hero-terminal.js";
 import { getOwnedPortraitRect } from './portrait-framing.js';
+import { createAccountResponseScene } from './account-response-scene.js';
 
 const icons = {
   ArrowUpRight,
@@ -79,6 +80,165 @@ const ticker = document.querySelector(".availability-track");
 ticker.after(ticker.cloneNode(true));
 const dialog = document.querySelector(".project-dialog");
 let projectTrigger;
+let accountResponseScene;
+
+function accountResponseMarkup(project) {
+  return `
+    <section class="response-case" data-response-case>
+      <header class="response-hero">
+        <div class="response-hero__meta"><span>${project.label}</span><span>INTERACTIVE CASE STUDY</span></div>
+        <h2 id="dialog-title">${project.name}</h2>
+        <p class="response-hero__lede">An analyst-gated identity response that turns a high-confidence risk signal into controlled, fully evidenced containment.</p>
+        <div class="response-metrics" aria-label="Project outcomes">
+          <div><strong>4 → 1</strong><span>consoles</span></div>
+          <div><strong>&lt; 10 min</strong><span>containment</span></div>
+          <div><strong>100%</strong><span>approval-gated</span></div>
+          <div><strong>Full</strong><span>audit trail</span></div>
+        </div>
+      </header>
+
+      <section class="response-lab" aria-labelledby="response-lab-title">
+        <header class="response-lab__header">
+          <div><p class="response-kicker">IDENTITY CONTAINMENT LAB</p><h3 id="response-lab-title">Trace signal → decision → action</h3></div>
+          <div class="response-case-state"><span>CASE IAM-0247</span><strong data-case-state>READY</strong></div>
+        </header>
+        <div class="response-hologram">
+          <canvas data-response-canvas tabindex="0" aria-label="Interactive 3D identity containment workflow. Drag to orbit, scroll to zoom, or select a station for details."></canvas>
+          <div class="response-hologram__hud"><span>HOLOGRAPHIC / LIVE</span><span>DRAG TO ORBIT · SCROLL TO ZOOM · DOUBLE-CLICK TO RESET</span></div>
+          <div class="response-hologram__detail" data-scene-detail><span>LIVE CASE / IAM-0247</span><strong>Compromised identity detected</strong><p>Select any station to inspect its role, or run the governed response.</p></div>
+        </div>
+        <div class="response-command">
+          <span data-response-execution aria-disabled="true" hidden></span>
+          <div class="response-command__status"><span>CASE CONTROL</span><strong data-response-announcement aria-live="polite">Run the scenario to prepare the analyst recommendation.</strong><small data-response-time>Awaiting analyst decision</small></div>
+          <div class="response-command__buttons" data-response-decision>
+            <button class="response-button response-button--primary" type="button" data-response-run>Run response ${icon("play")}</button>
+            <button class="response-button response-button--approve" type="button" data-response-approve disabled>Approve containment</button>
+            <button class="response-button response-button--reject" type="button" data-response-reject disabled>Reject</button>
+            <button class="response-button" type="button" data-response-reset>Reset ${icon("rotate-ccw")}</button>
+          </div>
+          <div class="response-command__result" data-response-rejected hidden><strong>No containment</strong><span>Ticket closed · decision and reason logged</span></div>
+        </div>
+      </section>
+      <footer class="response-footer"><p>${project.stack.join(" · ")} · Entra ID · ServiceDesk Plus</p><a class="button button-dark" href="mailto:mail2skm@icloud.com?subject=${encodeURIComponent(`Let's discuss: ${project.name}`)}">Discuss a similar workflow ${icon("arrow-up-right")}</a></footer>
+    </section>`;
+}
+
+function initialiseAccountResponse() {
+  const root = document.querySelector("[data-response-case]");
+  if (!root) return;
+  const state = root.querySelector("[data-case-state]");
+  const announcement = root.querySelector("[data-response-announcement]");
+  const approve = root.querySelector("[data-response-approve]");
+  const reject = root.querySelector("[data-response-reject]");
+  const execution = root.querySelector("[data-response-execution]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = root.querySelector("[data-response-canvas]");
+  const sceneDetail = root.querySelector("[data-scene-detail]");
+  try {
+    accountResponseScene?.dispose();
+    accountResponseScene = createAccountResponseScene({ canvas, onSelect: station => {
+      sceneDetail.innerHTML = `<span>${station.number} / WORKFLOW STATION</span><strong>${station.title}</strong><p>${station.detail}</p>`;
+    }});
+  } catch (error) {
+    canvas.parentElement.classList.add("is-fallback");
+    canvas.setAttribute("aria-label", "3D preview unavailable. The accessible workflow remains available below.");
+    console.warn("Identity response 3D scene unavailable:", error.message);
+  }
+  let timers = [];
+  const after = (callback, delay) => {
+    const timer = window.setTimeout(callback, reducedMotion ? 0 : delay);
+    timers.push(timer);
+  };
+  const updateNode = (id, phase, label) => {
+    const element = root.querySelector(`[data-response-node="${id}"]`);
+    if (element) {
+      element.dataset.phase = phase;
+      element.querySelector("[data-node-status]").textContent = label;
+    }
+    accountResponseScene?.setNodePhase(id, phase);
+  };
+  const pulseConnector = (id) => root.querySelector(`[data-connector="${id}"]`)?.classList.add("is-active");
+  const clearTimers = () => { timers.forEach(window.clearTimeout); timers = []; };
+  const reset = () => {
+    clearTimers();
+    state.textContent = "READY";
+    announcement.textContent = "Run the scenario to prepare the analyst recommendation.";
+    approve.disabled = true;
+    reject.disabled = true;
+    execution.setAttribute("aria-disabled", "true");
+    root.querySelector("[data-response-decision]").dataset.phase = "waiting";
+    accountResponseScene?.setNodePhase("decision", "locked");
+    accountResponseScene?.setNodePhase("audit", "locked");
+    root.querySelector("[data-response-rejected]").hidden = true;
+    root.querySelector("[data-response-time]").textContent = "Awaiting analyst decision";
+    root.querySelectorAll("[data-connector]").forEach(item => item.classList.remove("is-active"));
+    updateNode("alert", "ready", "Alert received");
+    updateNode("recommendation", "waiting", "Waiting");
+    ["trigger", "sessions", "password", "signin", "ticket"].forEach(id => updateNode(id, "locked", id === "sessions" || id === "password" || id === "signin" ? "Queued" : "Locked"));
+  };
+  root.querySelector("[data-response-run]").addEventListener("click", () => {
+    reset();
+    state.textContent = "ANALYSING";
+    announcement.textContent = "Risk signal received. Pulling identity context.";
+    updateNode("alert", "complete", "Alert received");
+    pulseConnector("alert");
+    after(() => {
+      updateNode("recommendation", "running", "Scoring 87 / 100");
+      announcement.textContent = "AI recommendation prepared from sign-in and session context.";
+    }, 420);
+    after(() => {
+      updateNode("recommendation", "complete", "Contain recommended");
+      pulseConnector("recommendation");
+      root.querySelector("[data-response-decision]").dataset.phase = "active";
+      accountResponseScene?.setNodePhase("decision", "running");
+      state.textContent = "ANALYST REVIEW";
+      announcement.textContent = "Automation paused. Analyst approval is required.";
+      approve.disabled = false;
+      reject.disabled = false;
+      approve.focus({ preventScroll: true });
+    }, 950);
+  });
+  approve.addEventListener("click", () => {
+    clearTimers();
+    approve.disabled = true;
+    reject.disabled = true;
+    root.querySelector("[data-response-decision]").dataset.phase = "approved";
+    accountResponseScene?.setNodePhase("decision", "complete");
+    execution.setAttribute("aria-disabled", "false");
+    state.textContent = "CONTAINING";
+    announcement.textContent = "Approved by analyst. Running three containment actions in parallel.";
+    updateNode("trigger", "running", "Executing");
+    pulseConnector("trigger");
+    after(() => {
+      updateNode("trigger", "complete", "Playbook started");
+      ["sessions", "password", "signin"].forEach(id => updateNode(id, "running", "Running"));
+    }, 360);
+    after(() => {
+      ["sessions", "password", "signin"].forEach(id => updateNode(id, "complete", "Complete"));
+      pulseConnector("actions");
+      updateNode("ticket", "running", "Writing evidence");
+    }, 980);
+    after(() => {
+      updateNode("ticket", "complete", "Evidence captured");
+      accountResponseScene?.setNodePhase("audit", "complete");
+      root.querySelector("[data-response-time]").textContent = "Containment completed in 08:42";
+      state.textContent = "CONTAINED";
+      announcement.textContent = "Containment complete. The evidence trail is ready for review.";
+    }, 1520);
+  });
+  reject.addEventListener("click", () => {
+    clearTimers();
+    approve.disabled = true;
+    reject.disabled = true;
+    root.querySelector("[data-response-decision]").dataset.phase = "rejected";
+    accountResponseScene?.setNodePhase("decision", "rejected");
+    root.querySelector("[data-response-rejected]").hidden = false;
+    state.textContent = "CLOSED — NO ACTION";
+    announcement.textContent = "Recommendation rejected. No containment ran; the reason was logged.";
+  });
+  root.querySelector("[data-response-reset]").addEventListener("click", reset);
+  reset();
+}
 
 function renderProjects(filter = "all") {
   const visible = projects.filter(
@@ -128,10 +288,18 @@ document.querySelector("#project-list").addEventListener("click", (event) => {
   const button = event.target.closest("[data-project]");
   if (!button) return;
   const project = projects.find((item) => item.id === button.dataset.project);
+  if (["governance", "malware-triage"].includes(project.id)) {
+    location.assign("./containment-lab.html");
+    return;
+  }
   projectTrigger = button;
+  dialog.classList.toggle("account-response-dialog", project.id === "account-response");
   document.querySelector("#dialog-content").innerHTML =
-    `<p class="eyebrow">${project.label}</p><h2 id="dialog-title">${project.name}</h2><p class="dialog-outcome">${project.outcome}</p><div class="dialog-story"><h3>The problem</h3><p>${project.problem}</p><h3>The approach</h3><p>${project.approach}</p><h3>The outcome</h3><p>${project.result}</p></div><p class="dialog-stack">${project.stack.join(" / ")}</p><a class="button button-dark" href="mailto:mail2skm@icloud.com?subject=${encodeURIComponent(`Let's discuss: ${project.name}`)}">Discuss a similar workflow ${icon("arrow-up-right")}</a>`;
+    project.id === "account-response"
+      ? accountResponseMarkup(project)
+      : `<p class="eyebrow">${project.label}</p><h2 id="dialog-title">${project.name}</h2><p class="dialog-outcome">${project.outcome}</p><div class="dialog-story"><h3>The problem</h3><p>${project.problem}</p><h3>The approach</h3><p>${project.approach}</p><h3>The outcome</h3><p>${project.result}</p></div><p class="dialog-stack">${project.stack.join(" / ")}</p><a class="button button-dark" href="mailto:mail2skm@icloud.com?subject=${encodeURIComponent(`Let's discuss: ${project.name}`)}">Discuss a similar workflow ${icon("arrow-up-right")}</a>`;
   paintIcons();
+  initialiseAccountResponse();
   dialog.showModal();
   document.body.classList.add("dialog-open");
 });
@@ -150,6 +318,8 @@ dialog.addEventListener("click", (event) => {
     dialog.close();
 });
 dialog.addEventListener("close", () => {
+  accountResponseScene?.dispose();
+  accountResponseScene = undefined;
   document.body.classList.remove("dialog-open");
   projectTrigger?.focus();
 });

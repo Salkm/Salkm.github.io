@@ -65,15 +65,15 @@ export const projects = [
   {
     id: "governance",
     category: "automation",
-    label: "AUTOMATION GOVERNANCE",
+    label: "AI MALWARE CONTAINMENT",
     icon: "git-branch",
-    title: "Automation with accountability built in.",
-    name: "Automation Governance Framework",
+    title: "Malware contained. Every action accountable.",
+    name: "AI-Assisted Malware & Ransomware Containment",
     summary:
-      "A reusable control pattern for approval, execution, and audit logging.",
-    outcome: "Human judgment at the decision point",
-    stack: ["n8n", "Approval gates", "Audit logging"],
-    steps: ["Request", "Approve", "Audit"],
+      "AI-assisted investigation and governed endpoint response, from malicious files to emergency ransomware isolation.",
+    outcome: "Policy-controlled response, verified results",
+    stack: ["AI automation", "Antivirus / SIEM", "Analyst approval"],
+    steps: ["Detect", "Authorize", "Contain"],
     tone: "mint",
     problem:
       "High-risk security actions need clear ownership, traceability, and controlled access as automation expands.",
